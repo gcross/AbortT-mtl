@@ -1,6 +1,8 @@
-{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE FunctionalDependencies #-}
+{-# LANGUAGE UndecidableInstances #-}
 
-module Control.Monad.Trans.Abort.Instances.MonadsTF where
+module Control.Monad.Trans.Abort.Instances.MTL where
 
 import Control.Monad.Cont.Class (MonadCont(..))
 import Control.Monad.Error.Class (MonadError(..))
@@ -11,28 +13,24 @@ import Control.Monad.Trans.Abort
 import Control.Monad.State.Class (MonadState(..))
 import Control.Monad.Writer.Class (MonadWriter(..))
 
-instance MonadCont m => MonadCont (AbortT r m) where
+instance MonadCont m => MonadCont (AbortT a m) where
     callCC = liftCallCC callCC
 
-instance MonadError m => MonadError (AbortT r m) where
-    type ErrorType (AbortT r m) = ErrorType m
+instance MonadError e m => MonadError e (AbortT a m) where
     throwError = lift . throwError
     catchError = liftCatch catchError
 
-instance MonadReader m => MonadReader (AbortT r m) where
-    type EnvType (AbortT r m) = EnvType m
+instance MonadReader r m => MonadReader r (AbortT a m) where
     ask   = lift ask
     local f = AbortT . local f . unwrapAbortT
 
-instance MonadWriter m => MonadWriter (AbortT r m) where
-    type WriterType (AbortT r m) = WriterType m
+instance MonadWriter w m => MonadWriter w (AbortT a m) where
     tell   = lift . tell
     listen = liftListen listen
     pass   = liftPass pass
 
-instance MonadState m => MonadState (AbortT r m) where
-    type StateType (AbortT r m) = StateType m
+instance MonadState s m => MonadState s (AbortT a m) where
     get = lift get
     put = lift . put
 
-instance MonadRWS m => MonadRWS (AbortT r m)
+instance MonadRWS r w s m => MonadRWS r w s (AbortT a m)
