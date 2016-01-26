@@ -1,5 +1,5 @@
 Name:                AbortT-mtl
-Version:             1.0
+Version:             1.0.0.1
 License:             BSD3
 License-file:        LICENSE
 Author:              Gregory Crosswhite
@@ -15,7 +15,7 @@ Category:            Control
 Library
     Build-depends:   base >= 3 && < 5,
                      AbortT-transformers >= 1.0.1 && < 1.1,
-                     mtl == 2.1.*
+                     mtl >= 2.1 && < 2.3
     Exposed-modules: Control.Monad.Trans.Abort.Instances.MTL
 
 source-repository head
