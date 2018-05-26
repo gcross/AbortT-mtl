@@ -5,7 +5,7 @@ License-file:        LICENSE
 Author:              Gregory Crosswhite
 Maintainer:          Gregory Crosswhite <gcrosswhite@gmail.com>
 Stability:           Provisional
-Homepage:            http://github.com/gcross/AbortT-mtl
+Homepage:            https://github.com/gcross/AbortT-mtl
 Synopsis:            mtl instances for the AbortT monad transformer
 Description:         This module provides instances for the mtl classes for AbortT.
 Cabal-version:       >=1.6
